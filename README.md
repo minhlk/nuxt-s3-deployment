@@ -1,13 +1,19 @@
-https://developer.mamezou-tech.com/en/nuxt/nuxt3-serverless-deploy/
-Write CDK for NuxtJS deployment
-- git workflow
-- Makefile
-- CDK/Cloudformation for cloudfront, S3
-- Later on route53
+## Prerequisites
+- Setup IAM assume role and allow Github OIDC
+- Using Cloudformation to deploy Cloudfront and S3
 
-[serverless framework] Add routing configuration for Api Gateway to point to cloudfront when path is '/'
+## TODO
+- Add Route53
+- [serverless framework] Add routing configuration for Api Gateway to point to cloudfront when path is '/'
 
-
-secrets.AWS_S3_DESTINATION
-vars.ENV_NAME
-secrets.AWS_ACCOUNT_ID
+## Configurations
+### 1. Github Environment
+```
+ENV_NAME
+e.g: dev, prod
+```
+### 2. Github Secret 
+```
+AWS_S3_DESTINATION
+AWS_ACCOUNT_ID
+```
