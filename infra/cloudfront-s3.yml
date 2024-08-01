@@ -1,0 +1,104 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Nuxt 3 application distribution template
+
+Parameters:
+  Environment:
+    Description: Enter a Environment Name.
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prd
+
+Resources:
+  # S3 bucket for static resource delivery
+  StaticResourceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      # Specify a globally unique name
+      BucketName: !Sub "minata-${Environment}-static-files-private-bucket"
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  # Access control from CloudFront to S3
+  StaticResourceOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "minata-${Environment}-s3-oac"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+  # S3 bucket policy (allow only from CloudFront)
+  StaticResourceBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref StaticResourceBucket
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          Sid: AllowCloudFrontServicePrincipalReadOnly
+          Effect: Allow
+          Principal:
+            Service: cloudfront.amazonaws.com
+          Action: s3:GetObject
+          Resource: !Sub "arn:aws:s3:::${StaticResourceBucket}/*"
+          Condition:
+            StringEquals:
+              AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${NuxtCloudfrontAppDistribution}"
+  NuxtRoutingCloudFrontFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      AutoPublish: true
+      FunctionCode: |
+        function handler(event) {
+          var request = event.request;
+          var uri = request.uri;
+          
+          // Check whether the URI is missing a file name.
+          if (uri.endsWith('/')) {
+              request.uri += 'index.html';
+          } 
+          // Check whether the URI is missing a file extension.
+          else if (!uri.includes('.')) {
+              request.uri += '/index.html';
+          }
+
+          return request;
+        }
+      FunctionConfig:
+        Comment: "Correct mismatch routing to sub folder in Cloudfront"
+        Runtime: cloudfront-js-2.0
+      Name: !Sub "minata-${Environment}-routing-function"
+  # CloudFront distribution
+  NuxtCloudfrontAppDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        HttpVersion: http2
+        Origins:
+          - Id: nuxt-static-resources
+            DomainName: !GetAtt StaticResourceBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt StaticResourceOriginAccessControl.Id
+            S3OriginConfig: {}
+        DefaultCacheBehavior:
+          TargetOriginId: nuxt-static-resources
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt NuxtRoutingCloudFrontFunction.FunctionMetadata.FunctionARN
+          # AWS Managed Cache Policy(CachingOptimized)
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          ViewerProtocolPolicy: redirect-to-https
+        DefaultRootObject: "index.html"
+        PriceClass: PriceClass_200
+
+##################################################
+# Outputs
+##################################################
+Outputs:
+  CloudFrontDomain:
+    Value: !GetAtt NuxtCloudfrontAppDistribution.DomainName
