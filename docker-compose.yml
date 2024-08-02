@@ -1,0 +1,13 @@
+version: '3'
+services:
+  minapita-front:
+    container_name: minapita-front
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+      - "24678:24678"

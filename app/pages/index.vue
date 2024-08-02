@@ -5,6 +5,6 @@
     </AppAlert>
     <NuxtLink to="/posts">Link to Post Page</NuxtLink>
     <br/>
-    <a href="/posts">Link to Post Page and reload</a>
+    <a href="/posts">Link to Post Page and Reload</a>
   </div>
 </template>
