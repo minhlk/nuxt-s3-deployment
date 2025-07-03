@@ -16,7 +16,7 @@ color.getColor
     <AppAlert>
       This is a <b>posts</b> page
     </AppAlert>
-    <input v-model="todoId" type="text" :disabled="pending">
+    <input v-model="todoId" type="text" :disabled="pending" haha="hihi">
     <div v-if="pending">
       Loading....
     </div>
@@ -24,17 +24,19 @@ color.getColor
       <pre>
         <code>
           {{ data }}
+          {{ data }}
         </code>
       </pre>
     </div>
     <div>
       <input type="button" @click="color.getColor" value="Get Color"/>
+      <input type="button" @click="color.getColor" value="Get Colour"/>
       <br/>
       {{ color.name }}
       <br/>
-      {{ color.color }}
+      {{ color.colorz }}
       <br/>
-      {{ color.count }}
+      {{ color.countz }}
     </div>
   </div>
 </template>
