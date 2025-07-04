@@ -1,2 +1,5 @@
 [pr_description]
 publish_labels = false
+
+[config]
+model="gpt-4.1-mini"
