@@ -3,3 +3,8 @@ publish_labels = false
 
 [config]
 model="gpt-4.1-mini"
+
+[pr_code_suggestions]
+extra_instructions="""\
+(1) Answer in Japanese
+"""
