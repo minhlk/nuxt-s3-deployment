@@ -4,7 +4,10 @@ publish_labels = false
 [config]
 model="gpt-4.1-mini"
 
-[pr_code_suggestions]
-extra_instructions="""\
-(1) Answer in Japanese
-"""
+
+[github_app]
+bot_user = "minhlk-actions[bot]"
+
+[best_practices]
+organization_name = "MinhLK-org"
+enable_global_best_practices = true
