@@ -9,6 +9,6 @@
   color: firebrick;
   background-color: bisque;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid black
 }
 </style>

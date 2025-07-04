@@ -34,8 +34,12 @@ color.getColor
       <br/>
       {{ color.name }}
       <br/>
+      {{ color.color }}
+      {{ color.colorz }}
       {{ color.colorz }}
       <br/>
+      {{ color.countz }}
+      {{ color.countz }}
       {{ color.countz }}
     </div>
   </div>
