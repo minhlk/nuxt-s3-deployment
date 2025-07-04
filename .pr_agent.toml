@@ -1,5 +1,5 @@
 [pr_description]
-publish_labels = false
+publish_labels = true
 
 [config]
 model="gpt-4.1-mini"
@@ -15,3 +15,6 @@ extra_instructions="""\
 - Handle loading states while waiting for responses
 - No duplicated component
 """
+
+[pr_reviewer] # /review 
+require_score_review=true
