@@ -10,7 +10,7 @@ enable_global_best_practices = true
 
 [pr_code_suggestions]
 extra_instructions="""\
-- Answer in Japanese  
+- Answer in Vietnamese
 - Use TypeScript (.tsx) instead of .jsx  
 - Handle loading states while waiting for responses
 - No duplicated component
