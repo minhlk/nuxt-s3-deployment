@@ -1,3 +1,6 @@
-(1) Answer in Japanese
-(2) Using typescript tsx instead of jsx
-(3) Handle loading while waiting for response
+# Best Practices
+
+- Answer in Japanese  
+- Use TypeScript (.tsx) instead of .jsx  
+- Handle loading states while waiting for responses
+- No duplicated component
