@@ -7,3 +7,11 @@ model="gpt-4.1-mini"
 [best_practices]
 organization_name = "MinhLK-org"
 enable_global_best_practices = true
+
+[pr_code_suggestions]
+extra_instructions="""\
+- Answer in Japanese  
+- Use TypeScript (.tsx) instead of .jsx  
+- Handle loading states while waiting for responses
+- No duplicated component
+"""
