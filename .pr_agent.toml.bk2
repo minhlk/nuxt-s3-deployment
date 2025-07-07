@@ -3,14 +3,15 @@ publish_labels = true
 
 [config]
 model="gpt-4.1-mini"
+allow_repo_config = false
 
 [best_practices]
-organization_name = "MinhLK-org"
+organization_name = "MinhLK-orgz"
 enable_global_best_practices = true
 
 [pr_code_suggestions]
 extra_instructions="""\
-- Answer in Vietnamese
+- Answer in Japanese
 - Use TypeScript (.tsx) instead of .jsx  
 - Handle loading states while waiting for responses
 - No duplicated component

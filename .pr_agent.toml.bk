@@ -1,0 +1,26 @@
+[config]
+model = "ollama/gemma3"
+fallback_models=["ollama/gemma3"]
+custom_model_max_tokens=12800 # set the maximal input tokens for the model
+duplicate_examples=true # will duplicate the examples in the prompt, to help the model to generate structured output
+
+[ollama]
+api_base = "http://localhost:11434" # or whatever port you're running Ollama on
+
+[pr_description]
+publish_labels = true
+
+[best_practices]
+organization_name = "MinhLK-org"
+enable_global_best_practices = true
+
+[pr_code_suggestions]
+extra_instructions="""\
+- Answer in Japanese
+- Use TypeScript (.tsx) instead of .jsx  
+- Handle loading states while waiting for responses
+- No duplicated component
+"""
+
+[pr_reviewer] # /review 
+require_score_review=true
